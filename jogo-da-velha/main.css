@@ -1,6 +1,9 @@
+
 #tabuleiro {
-    border: 0.5px solid gray;
+    border: 1px solid gray;
+    border-radius: 5px;
     width: 600px;
+    height: 320px;
     margin-right: auto;
     margin-left: auto;
     margin-top: 10%;
@@ -19,4 +22,34 @@ p {
     text-align: center;
     cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
+}
+
+.footer {
+    width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+
+button {
+    height: 50px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    background-color: rgba(0, 110, 255, 0.521);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 4px 4px rgba(0, 110, 255, 0.253);
+    cursor: pointer;
+    margin-right: 10px;
+    width: 35%;
+    text-align: center;
+    transition: 500ms;
+}
+
+button:hover {
+    width: 40%;
+    font-size: 20px;
+    background-color: rgba(0, 110, 255, 0.815);
+    box-shadow: 4px 4px rgba(0, 110, 255, 0.459);
 }

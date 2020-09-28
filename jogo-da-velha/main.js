@@ -16,13 +16,17 @@ var jogadorO = {
     valor: -1
 };
 
-var tabuleiro = [
-    [VAZIO, VAZIO, VAZIO],
-    [VAZIO, VAZIO, VAZIO],
-    [VAZIO, VAZIO, VAZIO]
-];
+var tabuleiro;
 
-var jogadorAtual = jogadorX;
+var jogadorAtual
+
+// 
+var opcaoSegundoJogadorEhComputador
+
+function escolheSegundoJogador(opcao) {
+    opcaoSegundoJogadorEhComputador = opcao === 'computador';
+    iniciaJogo();
+}
 
 function criaCampoJogada(linha, coluna) {
     const campoJogada = document.createElement('p');
@@ -48,9 +52,25 @@ function desenhaTabuleiro() {
     }
 }
 
+function jogadaComputador() {
+
+    const jogada = Math.round(Math.random() * 10);
+    let contador = 0
+    for (let linha = 0; linha < tabuleiro.length ; linha++) {
+        for (let coluna = 0; coluna < tabuleiro[linha].length; coluna++) {
+            if (contador === jogada) {
+                fazerJogada(linha, coluna);
+                return;
+            }
+            contador++;
+        }
+    }
+}
+
 function proximoJogador() {
     if (jogadorAtual === jogadorX) {
         jogadorAtual = jogadorO;
+        if (opcaoSegundoJogadorEhComputador) { setTimeout(() => jogadaComputador(), 100) }
     } else {
         jogadorAtual = jogadorX;
     }
@@ -61,9 +81,10 @@ function fazerJogada(linha, coluna) {
         tabuleiro[linha][coluna] = jogadorAtual;
         numeroJogadas++;
         desenhaTabuleiro();
-        checarVitoria();
+        if (checarVitoria()) { return; }
         proximoJogador()
     } else {
+        if (opcaoSegundoJogadorEhComputador) { jogadaComputador(); return; }
         alert('Jogada Inválida');
     }
 }
@@ -116,16 +137,20 @@ function checarDiagonal() {
 
 function checarVitoria() {
     if (checarLinha() || checarColuna() || checarDiagonal()) {
-        alert(`O jogador -> ${jogadorAtual.simbolo} ganhou`)
-        reiniciaJogo();
+        alert(`O jogador -> ${jogadorAtual.simbolo} ganhou`);
+        iniciaJogo();
+        limpaTabuleiro();
+    return true;
     } else if (numeroJogadas >= 9) {
         alert('Empate');
-        reiniciaJogo();
+        iniciaJogo();
+        limpaTabuleiro();
+        return true;
     }
-    
+    return false;
 }
 
-function reiniciaJogo() {
+function iniciaJogo() {
     jogadorAtual = jogadorX;
     tabuleiro = [
         [VAZIO, VAZIO, VAZIO],
@@ -133,5 +158,5 @@ function reiniciaJogo() {
         [VAZIO, VAZIO, VAZIO]
     ]
     numeroJogadas = 0;
-    desenhaTabuleiro();
+    desenhaTabuleiro()
 }
